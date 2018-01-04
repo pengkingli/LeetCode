@@ -1,0 +1,26 @@
+'''
+采用迭代法，头插法的方法，p指向当前剩余链表的首个节点，每次将之前的节点插到该节点之后，直到结束。注意head.next要在前面赋值，以免节点链表断开，
+时间复杂度O(n),空间复杂度O(1)
+'''
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head==None or head.next==None:
+            return head
+        new_head = None
+        p = head
+        while head:
+            p = head
+            head = head.next
+            p.next = new_head
+            new_head = p
+        return new_head

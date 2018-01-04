@@ -1,0 +1,34 @@
+'''
+时间复杂度O(n),空间复杂度O(1)
+'''
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reverseBetween(self, head, m, n):
+        """
+        :type head: ListNode
+        :type m: int
+        :type n: int
+        :rtype: ListNode
+        """
+        if head==None or head.next==None or m==n:
+            return head
+        dummy = ListNode(0)
+        dummy.next  = head
+        p = dummy
+        for i in xrange(m-1):
+            p = p.next
+        new_head = p  #new_head指向dummy对象，new_head指向需要翻转的前一个节点，即第m-1个
+        p = new_head.next #p指向要翻转的第一个节点
+        curr = p.next #curr指向要插入到new_head之后的节点
+        for i in xrange(m,n):
+            p.next = curr.next  #将要翻转的第一个节点始终指向当前节点的后一个节点，防止链表断开
+            curr.next = new_head.next #将已经翻转的节点接到当前节点之后
+            new_head.next = curr  #将当前节点插到new_head之后
+            curr = p.next  #curr指针向后走一步         
+        return dummy.next   

@@ -1,0 +1,32 @@
+'''
+判断一个链表是否有环，环的起点，环长度等见https://www.cnblogs.com/xudong-bupt/p/3667729.html
+在无需求环长度情况下赵环起点，见http://bookshadow.com/weblog/2015/07/10/leetcode-linked-list-cycle-ii/
+时间复杂度O(n),空间复杂度O(1)
+'''
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head==None or head.next==None:
+            return None
+        slow=fast=head   #初始时必须两者指向统一节点，否则会计算不成立，需要改变
+        while fast!=None and fast.next!=None:
+            slow = slow.next
+            fast = fast.next.next
+            if fast==slow: #由于初始时fast和slow指向head，因此必须进入到循环之后再进行判断
+                break
+        if fast==None or fast.next==None:
+            return None            
+        slow = head
+        while fast!=slow:
+            slow = slow.next
+            fast = fast.next
+        return slow       

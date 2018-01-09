@@ -1,0 +1,48 @@
+'''
+分为三步，
+第一步用快慢针将链表分为前后两部分，前一部分个数=后提部分个数/+1;
+第二步将后一部分进行翻转
+第三步连接成一个链表
+'''
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: ListNode
+        :rtype: void Do not return anything, modify head in-place instead.
+        """
+        if head==None or head.next==None or head.next.next==None:
+            pass #需要注意，并不要求返回链表而是就地处理，所以不返回任何数值
+        else:
+            slow=fast=head
+            while fast!=None and fast.next!=None and fast.next.next!=None:
+                slow = slow.next
+                fast = fast.next.next
+            head2 = slow.next #后一部分
+            slow.next = None  #前一部分
+            head1 = head
+            
+            #链表翻转
+            new_head2 = None
+            p = head2    
+            while head2!=None:       
+                p = head2
+                head2 = head2.next
+                p.next = new_head2
+                new_head2 = p      
+            p1 = head1
+            p2 = new_head2
+            
+            #链表链接
+            while p2!=None:
+                tmp1 = p1.next
+                tmp2 = p2.next
+                p1.next = p2
+                p2.next = tmp1
+                p1,p2 = tmp1,tmp2

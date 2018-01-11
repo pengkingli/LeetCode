@@ -1,0 +1,46 @@
+'''
+采用的思路是先遍历两个链表，然后将链表长度对齐，依次比较链表是否相等，第一次相等时即为第一个公共节点
+时间复杂度O(2(m+n))
+空间复杂度O(1)
+剑指offer中用两个栈实现
+'''
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if headA==None or headB==None:
+            return None     
+        pa = headA
+        pb = headB
+        lena=lenb=0
+        while pa or pb:  #用一个while循环实现，降低时间
+            if pa:
+                lena = lena + 1
+                pa = pa.next
+            if pb:
+                lenb = lenb + 1
+                pb = pb.next
+        pa = headA
+        pb = headB
+        if lena>lenb:
+            dlen = lena - lenb
+            for i in range(dlen):
+                pa = pa.next
+        elif lena<lenb:
+            dlen = lenb - lena
+            for i in range(dlen):
+                pb = pb.next
+        while pa:
+            if pa==pb:
+                return pa
+            pa = pa.next
+            pb = pb.next
+        return None

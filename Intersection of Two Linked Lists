@@ -44,3 +44,39 @@ class Solution(object):
             pa = pa.next
             pb = pb.next
         return None
+方法2：
+def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if headA==None or headB==None:
+            return None     
+        pa=pa1=headA
+        pb=pb1=headB
+        flag = 0
+        while pa or pb: #用一个循环都搞定，不需要知道链表长度以及哪个链表长
+            if pa and pb:
+                pa = pa.next
+                pb = pb.next
+            elif pa:
+                flag = 1
+                pa = pa.next
+                pa1 = pa1.next        
+            elif pb:
+                flag = 2
+                pb = pb.next
+                pb1 = pb1.next   
+        if flag==1:
+            pa = pa1
+            pb = headB
+        elif flag==2:
+            pa = headA
+            pb = pb1
+        else: pa,pb=headA,headB
+        while pa:
+            if pa==pb:
+                return pa
+            pa = pa.next
+            pb = pb.next
+        return None   

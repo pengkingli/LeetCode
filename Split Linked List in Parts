@@ -1,0 +1,41 @@
+'''
+思路上，先计算分配关系，子长度最大相差1，计算得：子最大长度：length/k+1;子最大长度对应的个数：length%k
+时间复杂度O(2n),空间复杂度O(1)
+'''
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def splitListToParts(self, root, k):
+        """
+        :type root: ListNode
+        :type k: int
+        :rtype: List[ListNode]
+        """
+        ret = [None] * k
+        listlen,move = 0,root    
+        while move!=None:
+            listlen += 1
+            move = move.next
+        slen,snum =  listlen/k,listlen%k
+        move,index = root,0
+        while move:
+            tmp = move
+            pre = ListNode(0) #建立当前节点的前一个节点，便于将该节点分离出来
+            pre.next = tmp
+            num = 0
+            if index<snum:
+                while num<slen+1:
+                    pre,move = pre.next,move.next
+                    num +=1
+            else:
+                while num<slen:
+                    pre,move = pre.next,move.next
+                    num +=1         
+            pre.next = None
+            ret[index] = tmp
+            index += 1
+        return ret

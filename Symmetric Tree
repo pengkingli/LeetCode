@@ -1,0 +1,27 @@
+'''
+#结束条件的判断很重要，用递归的思想定义结束条件
+'''
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def judge(self,p,q):
+        if p==None and q==None: #结束条件
+            return True
+        if p!=None and q!=None and p.val==q.val:
+            return self.judge(p.left,q.right) and self.judge(q.left,p.right)
+        return False
+    
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root==None:
+            return True
+        else:
+            return self.judge(root.left,root.right)
